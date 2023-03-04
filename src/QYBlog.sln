@@ -1,13 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{5C8AD75A-00E9-44CC-A5B2-234E3E8DCF84}") = "QYBlog.Server", "Server\QYBlog.Server.csproj", "{CE71CCC8-981B-4943-A6DC-E87169604487}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QYBlog.Server", "Server\QYBlog.Server.csproj", "{CE71CCC8-981B-4943-A6DC-E87169604487}"
 EndProject
-Project("{5C8AD75A-00E9-44CC-A5B2-234E3E8DCF84}") = "QYBlog.Client", "Client\QYBlog.Client.csproj", "{594B3415-AC52-426A-A7A5-DEAEC5A2D563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QYBlog.Client", "Client\QYBlog.Client.csproj", "{594B3415-AC52-426A-A7A5-DEAEC5A2D563}"
 EndProject
-Project("{5C8AD75A-00E9-44CC-A5B2-234E3E8DCF84}") = "QYBlog.Shared", "Shared\QYBlog.Shared.csproj", "{BE2E1F46-C6A1-4599-A003-2E6B2F32B7D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QYBlog.Shared", "Shared\QYBlog.Shared.csproj", "{BE2E1F46-C6A1-4599-A003-2E6B2F32B7D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

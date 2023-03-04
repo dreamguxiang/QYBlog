@@ -1,0 +1,40 @@
+﻿@code {
+    [Inject] IJSRuntime JSRuntime { get; set; }
+    [Inject] NavigationManager NavManager { get; set; }
+
+    private string Runtime => System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier;
+    private string HybridType { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        HybridType = await JSRuntime.InvokeAsync<string>("getHybridType");
+        StateHasChanged();
+
+        if (HybridType?.StartsWith("Hybrid") != true) return;
+
+        if (Runtime == "browser-wasm")
+        {
+            await JSRuntime.InvokeVoidAsync("wasmReady");
+        }
+
+        EventHandler<LocationChangedEventArgs> switchFunc = null;
+        switchFunc = async (_, e) =>
+        {
+            try
+            {
+                var canUnsubscribe = await JSRuntime.InvokeAsync<bool>("switchToWasm", e.Location);
+                if (canUnsubscribe)
+                {
+                    NavManager.LocationChanged -= switchFunc;
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                return;
+            }
+        };
+        NavManager.LocationChanged += switchFunc;
+    }
+}

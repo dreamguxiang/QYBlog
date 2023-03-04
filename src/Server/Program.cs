@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.ResponseCompression;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,10 @@ StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configurat
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+//Server模式
+builder.Services.AddServerSideBlazor();
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 
@@ -34,6 +39,24 @@ app.UseRouting();
 
 app.MapRazorPages();
 app.MapControllers();
-app.MapFallbackToFile("index.html");
+//app.MapFallbackToFile("index.html");
+
+//Server模式
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
 
 app.Run();
+
+public enum HybridType
+{
+    ServerSide,
+    WebAssembly,
+    HybridManual,
+    HybridOnNavigation,
+    HybridOnReady
+}
+
+public class HybridOptions
+{
+    public HybridType HybridType { get; set; }
+}
