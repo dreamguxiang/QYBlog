@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.ResponseCompression;
 using MudBlazor.Services;
+using QYBlog.Shared.Utils;
+
+Utils.CreateDirectory();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,11 @@ builder.Services.AddRazorPages();
 //Server模式
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
+
+//注册API服务
+builder.Services.AddControllers();
+
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -46,6 +54,7 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
 
 public enum HybridType
 {
