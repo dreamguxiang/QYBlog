@@ -5,24 +5,82 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">QingYu</MudText>
-        </MudDrawerHeader>
-        <NavMenu />
-    </MudDrawer>
+    <style type="text/css">
+        .my-avatar1 {
+            position: fixed;
+        }
+
+
+    </style>
+
+
+    <RuntimeHeader />
+
+    <MudPaper Width="200px" Class="my-avatar1 pa-3" Elevation="0">
+       <div Style="text-align: center" >
+            <MudAvatar Image="https://img.aoyouer.com/images/2022/11/11/QQ20221111203356.jpg" Style="height:90px; width:90px;" />
+        </div>
+        <MudText Align="Align.Center" Style="font-size: 18px" Color="Color.Default"><a href=""><b>轻语</b></a></MudText>
+        <MudText Align="Align.Center" Style="@($"color:{Colors.Grey.Lighten1}; font-size: 13px")">神奇的小破站</MudText>
+        <MudGrid Justify="Justify.Center" Spacing="2">
+            <MudItem>
+                <MudIconButton Target="_parent" Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/dreamguxiang" Size="Size.Small" />
+            </MudItem>
+            <MudItem>
+                <MudIconButton Target="_parent" Icon="@Icons.Material.Filled.Favorite" Color="Color.Secondary" Size="Size.Small"></MudIconButton>
+            </MudItem>
+        </MudGrid>
+
+        <MudNavMenu Class="mud-width-full d-none d-md-block" Margin="Margin.Normal">
+            <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+            <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
+            <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
+        </MudNavMenu>
+
+    </MudPaper>
+
+    <MudAppBar Elevation="0" Style="display:none" Class="d-block d-md-none" Color=Color.Transparent>
+        <MudSpacer/>
+        <MudIconButton Icon="@AppBarIcon" Edge="Edge.Start" OnClick="DrawerToggle" />
+    </MudAppBar>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+            @if (@_drawerOpen)
+            {
+                <MudPaper Class="@($"d-block d-md-none mud-navmenu mud-navmenu-primary mud-navmenu-margin-dense mud-navmenu-dense mud-navmenu-rounded pa-2 overflow-auto")" Style="overflow:hidden; position:relative;" Elevation="0">
+                    <MudNavMenu Margin="Margin.Normal">
+                        <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+                        <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
+                        <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
+                    </MudNavMenu>
+                </MudPaper>
+            }
+            <br/>
             @Body
         </MudContainer>
     </MudMainContent>
 </MudLayout>
 
 @code {
-    bool _drawerOpen = true;
+    [Inject] IJSRuntime JSRuntime { get; set; }
+    bool _drawerOpen = false;
+    string AppBarIcon = Icons.Material.Filled.Menu;
+    int windowWidth;
+
 
     void DrawerToggle()
     {
-        _drawerOpen = !_drawerOpen;
+        if (!_drawerOpen)
+        {
+            AppBarIcon = Icons.Material.Filled.Close;
+            _drawerOpen = true;
+
+        }
+        else
+        {
+            AppBarIcon = Icons.Material.Filled.Menu;
+            _drawerOpen = false;
+        }
     }
 }
+

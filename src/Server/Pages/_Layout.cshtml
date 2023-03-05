@@ -18,14 +18,15 @@
     <base href="~/" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
 </head>
 
 <body>
      <script>
         window.hybridType = '@hybridType';
         window.getHybridType = function () { return window.hybridType; }
+        window.getWindowWidth = function() { return window.innerWidth; }
     </script>
-
     @RenderBody()
 
     @if (hybridType.ToString().StartsWith("Hybrid"))
@@ -65,6 +66,7 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script>window.Blazor.start();</script>
 
 </body>
 </html>
