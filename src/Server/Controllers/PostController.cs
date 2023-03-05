@@ -6,7 +6,7 @@ using QYBlog.Shared.Class;
 [ApiController]
 public class PostListController : ControllerBase
 {
-    private readonly List<Post> posts = new PostList(true).Posts;
+    private readonly List<Post> posts = new PostList(true).GetPostList();
 
     [HttpGet]
     public IEnumerable<Post> Get()

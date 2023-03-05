@@ -4,7 +4,7 @@ namespace QYBlog.Shared.Class
 {
     public class PostList
     {
-        public List<Post>? Posts;
+        private List<Post>? Posts;
 
         public PostList(bool isServer) {
             Posts = new List<Post>();
@@ -42,6 +42,15 @@ namespace QYBlog.Shared.Class
         public PostList(List<Post> posts)
         {
             Posts = posts;
+        }
+
+        public List<Post> GetPostList()
+        {
+            if (Posts == null)
+            {
+                Posts = new List<Post>();
+            }
+            return Posts;
         }
 
         public bool Add(Post post)
