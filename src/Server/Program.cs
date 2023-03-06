@@ -1,7 +1,14 @@
-﻿using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using QYBlog.Shared.Utils;
+using System.Reflection.PortableExecutable;
 
 Utils.CreateDirectory();
 
@@ -20,8 +27,19 @@ builder.Services.AddMudServices();
 
 //注册API服务
 builder.Services.AddControllers();
-
 builder.Services.AddCors();
+
+if (!builder.Services.Any(x => x.ServiceType == typeof(HttpClient)))
+{
+    builder.Services.AddScoped(sp =>
+    {
+        var uriHelper = sp.GetRequiredService<NavigationManager>();
+        return new HttpClient
+        {
+            BaseAddress = new Uri(uriHelper.BaseUri)
+        };
+    });
+}
 
 var app = builder.Build();
 
@@ -47,7 +65,6 @@ app.UseRouting();
 
 app.MapRazorPages();
 app.MapControllers();
-//app.MapFallbackToFile("index.html");
 
 //Server模式
 app.MapBlazorHub();

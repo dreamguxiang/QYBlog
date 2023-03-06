@@ -1,0 +1,26 @@
+﻿@using QYBlog.Shared.Class;
+@using System.Net.Http.Json;
+@using Newtonsoft.Json;
+@using QYBlog.Client.Component
+
+<MudStack Spacing="5"> 
+    @foreach (var post in posts)
+    {
+        <PostItemComponent Post="@post" />
+    }
+</MudStack>
+
+@code {
+
+    [Inject]
+    private HttpClient httpClient { get; set; }
+
+    public List<Post> posts = new List<Post>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await httpClient.GetFromJsonAsync<List<Post>>("/api/postlist");
+        StateHasChanged();
+        await base.OnInitializedAsync();
+    }
+}

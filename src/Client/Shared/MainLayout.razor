@@ -9,10 +9,7 @@
         .my-avatar1 {
             position: fixed;
         }
-
-
     </style>
-
 
     <RuntimeHeader />
 
@@ -30,13 +27,13 @@
                 <MudIconButton Target="_parent" Icon="@Icons.Material.Filled.Favorite" Color="Color.Secondary" Size="Size.Small"></MudIconButton>
             </MudItem>
         </MudGrid>
-
-        <MudNavMenu Class="mud-width-full d-none d-md-block" Margin="Margin.Normal">
+        <MudDrawer Open=true Elevation="0" Class="d-none d-md-block" Breakpoint="Breakpoint.Md">
+        <MudNavMenu Margin="Margin.Normal">
             <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
             <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
             <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
         </MudNavMenu>
-
+        </MudDrawer>
     </MudPaper>
 
     <MudAppBar Elevation="0" Style="display:none" Class="d-block d-md-none" Color=Color.Transparent>

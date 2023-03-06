@@ -1,0 +1,18 @@
+﻿@using QYBlog.Shared.Class
+
+
+<MudCard>
+    <MudCardMedia Image="@Post.Image" Height="200" />
+     <MudCardContent>
+        <MudText Typo="Typo.h5">@Post.Title</MudText>
+        <MudText Typo="Typo.body2">@Post.Description</MudText>
+    </MudCardContent>
+</MudCard>
+
+@code {
+
+    [Parameter]
+    public Post Post { get; set; } = null!;
+
+}
+
