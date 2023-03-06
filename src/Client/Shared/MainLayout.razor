@@ -14,7 +14,7 @@
     <RuntimeHeader />
 
     <MudPaper Width="200px" Class="my-avatar1 pa-3" Elevation="0">
-       <div Style="text-align: center" >
+        <div Style="text-align: center">
             <MudAvatar Image="https://img.aoyouer.com/images/2022/11/11/QQ20221111203356.jpg" Style="height:90px; width:90px;" />
         </div>
         <MudText Align="Align.Center" Style="font-size: 18px" Color="Color.Default"><a href=""><b>轻语</b></a></MudText>
@@ -28,20 +28,20 @@
             </MudItem>
         </MudGrid>
         <MudDrawer Open=true Elevation="0" Class="d-none d-md-block" Breakpoint="Breakpoint.Md">
-        <MudNavMenu Margin="Margin.Normal">
-            <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-            <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
-            <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
-        </MudNavMenu>
+            <MudNavMenu Margin="Margin.Normal">
+                <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+                <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
+                <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
+            </MudNavMenu>
         </MudDrawer>
     </MudPaper>
 
     <MudAppBar Elevation="0" Style="display:none" Class="d-block d-md-none" Color=Color.Transparent>
-        <MudSpacer/>
+        <MudSpacer />
         <MudIconButton Icon="@AppBarIcon" Edge="Edge.Start" OnClick="DrawerToggle" />
     </MudAppBar>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+        <MudContainer MaxWidth="MaxWidth.Large">
             @if (@_drawerOpen)
             {
                 <MudPaper Class="@($"d-block d-md-none mud-navmenu mud-navmenu-primary mud-navmenu-margin-dense mud-navmenu-dense mud-navmenu-rounded pa-2 overflow-auto")" Style="overflow:hidden; position:relative;" Elevation="0">
@@ -51,11 +51,20 @@
                         <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
                     </MudNavMenu>
                 </MudPaper>
+                <br />
             }
-            <br/>
-            @Body
+
+            <div class="mud-container mud-container-maxwidth-lg">
+                @Body
+            </div>
         </MudContainer>
     </MudMainContent>
+
+    <MudToolBar>
+        <div class="d-flex flex-grow-1 gap-4">
+            <MudText Typo="Typo.body1" Style="color: var(--accent-color);font-weight: 700;margin-bottom: 5px;"> ©2021-2023轻语 </MudText>
+        </div>
+    </MudToolBar>
 </MudLayout>
 
 @code {
