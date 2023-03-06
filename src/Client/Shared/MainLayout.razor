@@ -13,21 +13,13 @@
 
     <RuntimeHeader />
 
-    <MudPaper Width="200px" Class="my-avatar1 pa-3" Elevation="0">
-        <div Style="text-align: center">
-            <MudAvatar Image="https://img.aoyouer.com/images/2022/11/11/QQ20221111203356.jpg" Style="height:90px; width:90px;" />
-        </div>
-        <MudText Align="Align.Center" Style="font-size: 18px" Color="Color.Default"><a href=""><b>轻语</b></a></MudText>
-        <MudText Align="Align.Center" Style="@($"color:{Colors.Grey.Lighten1}; font-size: 13px")">神奇的小破站</MudText>
-        <MudGrid Justify="Justify.Center" Spacing="2">
-            <MudItem>
-                <MudIconButton Target="_parent" Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/dreamguxiang" Size="Size.Small" />
-            </MudItem>
-            <MudItem>
-                <MudIconButton Target="_parent" Icon="@Icons.Material.Filled.Favorite" Color="Color.Secondary" Size="Size.Small"></MudIconButton>
-            </MudItem>
-        </MudGrid>
-        <MudDrawer Open=true Elevation="0" Class="d-none d-md-block" Breakpoint="Breakpoint.Md">
+
+    <MudPaper Width="200px" Class="my-avatar1 pa-3 d-none d-md-block" Elevation="0">
+        <MudDrawer Open=true Elevation="0" Breakpoint="Breakpoint.Md">
+
+            <MudDrawerContainer>
+                <QYBlog.Client.Component.AuthorInfoComponent />
+            </MudDrawerContainer>
             <MudNavMenu Margin="Margin.Normal">
                 <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
                 <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
@@ -40,6 +32,11 @@
         <MudSpacer />
         <MudIconButton Icon="@AppBarIcon" Edge="Edge.Start" OnClick="DrawerToggle" />
     </MudAppBar>
+
+    <MudPaper Width="200px" Class="pa-3 d-block d-md-none" Elevation="0">
+        <QYBlog.Client.Component.AuthorInfoComponent />
+    </MudPaper>
+
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large">
             @if (@_drawerOpen)
@@ -51,13 +48,12 @@
                         <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
                     </MudNavMenu>
                 </MudPaper>
-                <br />
             }
-
-            <div class="mud-container mud-container-maxwidth-lg">
-                @Body
-            </div>
         </MudContainer>
+        <MudContainer MaxWidth="MaxWidth.Large">
+            @Body
+        </MudContainer>
+
     </MudMainContent>
 
     <MudToolBar>
@@ -71,8 +67,55 @@
     [Inject] IJSRuntime JSRuntime { get; set; }
     bool _drawerOpen = false;
     string AppBarIcon = Icons.Material.Filled.Menu;
-    int windowWidth;
+    private bool isMobile;
+    private int width { get; set; }
 
+    private int ScreenWidth { get; set; } = 0;
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            ScreenWidth = await JSRuntime.InvokeAsync<int>("getScreenWidth");
+            width = await JSRuntime.InvokeAsync<int>("getWindowWidth");
+
+            if ((ScreenWidth / 2 + 100) >= width)
+            {
+                isMobile = true;
+            }
+            else
+            {
+                isMobile = false;
+            }
+            await JSRuntime.InvokeVoidAsync("registerResizeHandler", DotNetObjectReference.Create(this));
+            StateHasChanged();
+        }
+
+    }
+
+    [JSInvokable]
+    public async Task HandleResize()
+    {
+        width = await JSRuntime.InvokeAsync<int>("getWindowWidth");
+
+        if ( (ScreenWidth / 2 + 100) >= width ){
+            isMobile = true;
+        }
+        else
+        {
+            isMobile = false;  
+        }
+        StateHasChanged();
+    }
+
+
+
+    public async ValueTask DisposeAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("unregisterResizeHandler");
+    }
 
     void DrawerToggle()
     {

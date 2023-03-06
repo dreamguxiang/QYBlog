@@ -26,6 +26,15 @@
         window.hybridType = '@hybridType';
         window.getHybridType = function () { return window.hybridType; }
         window.getWindowWidth = function() { return window.innerWidth; }
+
+    function registerResizeHandler(componentRef) {
+        window.onresize = function() {
+            componentRef.invokeMethodAsync("HandleResize");
+        };
+    }
+        function getScreenWidth() {
+        return  window.screen.width;
+    }
     </script>
     @RenderBody()
 
