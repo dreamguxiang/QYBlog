@@ -21,7 +21,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
         # 此处为rsync的flag
         ARGS: "-avz --delete"
-        SOURCE: "src/Server/bin/Release/net6.0/publish/"
+        SOURCE: "src/Server/bin/Release/net6.0/linux-x64/publish/"
         REMOTE_HOST: "litetitle.com"
         REMOTE_USER: "root"
         TARGET: "/var/www/html/newlite"
