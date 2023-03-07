@@ -62,7 +62,7 @@ app.UseMiddleware<AllowedExtensionsMiddleware>();
 
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "content\\post")),
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "content/post")),
     RequestPath = "/content/post",
 });
 
