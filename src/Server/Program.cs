@@ -40,13 +40,10 @@ if (!builder.Services.Any(x => x.ServiceType == typeof(HttpClient)))
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseWebAssemblyDebugging();
-}
-else
+if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
+
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -56,9 +53,6 @@ app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 
 app.UseStaticFiles();
-
-app.UseMiddleware<AllowedExtensionsMiddleware>();
-
 
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -95,24 +89,3 @@ public class HybridOptions
     public HybridType HybridType { get; set; }
 }
 
-public class AllowedExtensionsMiddleware
-{
-    private readonly RequestDelegate _next;
-    private readonly string[] files = new string[] { ".jpg", ".jpeg", ".png", ".gif" };
-    public AllowedExtensionsMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        var fileExtension = Path.GetExtension(context.Request.Path);
-        if (!string.IsNullOrEmpty(fileExtension) && !files.Contains(fileExtension))
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-            return;
-        }
-
-        await _next(context);
-    }
-}

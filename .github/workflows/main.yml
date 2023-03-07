@@ -25,4 +25,4 @@ jobs:
         REMOTE_HOST: "litetitle.com"
         REMOTE_USER: "root"
         TARGET: "/var/www/html/newlite"
-        SCRIPT_AFTER: ./QYBlog.Server --urls https://0.0.0.0:5000 &
+        SCRIPT_AFTER: ./QYBlog.Server
