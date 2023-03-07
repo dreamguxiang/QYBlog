@@ -1,0 +1,17 @@
+name: DeployToPages
+env:
+  PUBLISH_DIR: bin/Release/netstandard2.1/publish/wwwroot
+
+# Controls when the action will run
+on:
+  push:
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Publish app
+      run: dotnet publish -c Release
