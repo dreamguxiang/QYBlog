@@ -1,11 +1,9 @@
 name: DeployToPages
 env:
-  PUBLISH_DIR: bin/Release/netstandard2.1/publish/wwwroot
+  PUBLISH_DIR: bin/Release/net6.0/publish
 
-# Controls when the action will run
 on:
   push:
-
 
 jobs:
   build:
@@ -14,4 +12,5 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Publish app
+      working-directory: /src
       run: dotnet publish -c Release
