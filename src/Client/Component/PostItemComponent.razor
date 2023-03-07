@@ -1,7 +1,7 @@
 ﻿@using QYBlog.Shared.Class
 
 
-<MudCard>
+<MudCard Style="Border-radius: 15px;">
     <MudCardMedia Image="@Post.Image" Height="200" />
      <MudCardContent>
         <MudText Typo="Typo.h5">@Post.Title</MudText>
@@ -14,5 +14,11 @@
     [Parameter]
     public Post Post { get; set; } = null!;
 
+    public int getImageHeight(Post post)
+    {
+        //图片是否存在
+        return 0;
+
+    }
 }
 

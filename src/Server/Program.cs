@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+
+using Microsoft.Extensions.FileProviders;
 using MudBlazor.Services;
 using QYBlog.Shared.Utils;
-using System.Reflection.PortableExecutable;
+using System.Net;
 
 Utils.CreateDirectory();
 
@@ -58,9 +54,20 @@ else
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
+
 app.UseStaticFiles();
 
+app.UseMiddleware<AllowedExtensionsMiddleware>();
+
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "content\\post")),
+    RequestPath = "/content/post",
+});
+
 app.UseRouting();
+
 
 
 app.MapRazorPages();
@@ -71,6 +78,7 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
 
 
 public enum HybridType
@@ -85,4 +93,26 @@ public enum HybridType
 public class HybridOptions
 {
     public HybridType HybridType { get; set; }
+}
+
+public class AllowedExtensionsMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly string[] files = new string[] { ".jpg", ".jpeg", ".png", ".gif" };
+    public AllowedExtensionsMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var fileExtension = Path.GetExtension(context.Request.Path);
+        if (!string.IsNullOrEmpty(fileExtension) && !files.Contains(fileExtension))
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            return;
+        }
+
+        await _next(context);
+    }
 }
