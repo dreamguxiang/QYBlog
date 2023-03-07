@@ -28,6 +28,11 @@
         </MudDrawer>
     </MudPaper>
 
+     <MudPaper Width="200px" Class="d-none d-md-block" Elevation="0">
+        <MudDrawer Width="400px" Open=true Elevation="0" Anchor="Anchor.Right" Breakpoint="Breakpoint.Md">
+        </MudDrawer>
+    </MudPaper>
+
     <MudAppBar Elevation="0" Style="display:none" Class="d-block d-md-none" Color=Color.Transparent>
         <MudSpacer />
         <MudIconButton Icon="@AppBarIcon" Edge="Edge.Start" OnClick="DrawerToggle" />
@@ -55,6 +60,8 @@
         </MudContainer>
 
     </MudMainContent>
+
+
 
     <MudToolBar>
         <div class="d-flex flex-grow-1 gap-4">

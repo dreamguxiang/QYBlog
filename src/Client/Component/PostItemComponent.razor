@@ -1,11 +1,22 @@
 ﻿@using QYBlog.Shared.Class
-
-
+@using System.Drawing
 <MudCard Style="Border-radius: 15px;">
-    <MudCardMedia Image="@Post.Image" Height="200" />
-     <MudCardContent>
-        <MudText Typo="Typo.h5">@Post.Title</MudText>
-        <MudText Typo="Typo.body2">@Post.Description</MudText>
+    @if (ShowImg)
+    {
+        <MudCardMedia Image="@RealImg" />
+    }
+    <MudCardContent>
+        @if (ShowTags)
+        {
+            foreach (var tag in Post.Tags)
+            {
+                <MudChip Color="@TagColor">@tag</MudChip>
+            }
+        }
+        <h3 style="font-weight: 600;margin: 0;color: var(--card-text-color-main);font-size: 2.2rem;">
+            @Post.Title
+        </h3>
+        <MudText Typo="Typo.body1">@Post.Description</MudText>
     </MudCardContent>
 </MudCard>
 
@@ -13,12 +24,48 @@
 
     [Parameter]
     public Post Post { get; set; } = null!;
+    [Inject]
+    private HttpClient httpClient { get; set; }
 
-    public int getImageHeight(Post post)
+    public bool ShowImg { get; set; } = false;
+    public bool ShowTags { get; set; } = false;
+    public string RealImg { get; set; } = "";
+
+    public MudBlazor.Color TagColor { get; set; } = CreateTagColor();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        //图片是否存在
-        return 0;
+        if (firstRender)
+        {
+            IsShowImage();
+            IsShowTags();
+            StateHasChanged();
+        }
+    }
 
+    static public MudBlazor.Color CreateTagColor()
+    {
+        Random random = new Random();
+        var colors = Enum.GetValues(typeof(MudBlazor.Color)).Cast<MudBlazor.Color>().ToList();
+        return colors[random.Next(colors.Count)];
+    }
+
+    public void IsShowImage()
+    {
+        if (Post.Image != null)
+        {
+            ShowImg = true;
+            RealImg = Path.Combine(Post.Path, Post.Image);
+            RealImg = RealImg.Replace("\\", "/");
+        }
+    }
+
+    public void IsShowTags()
+    {
+        if (Post.Tags != null)
+        {
+            ShowTags = true;
+        }
     }
 }
 

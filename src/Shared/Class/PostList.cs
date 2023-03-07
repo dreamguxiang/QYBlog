@@ -16,13 +16,13 @@ namespace QYBlog.Shared.Class
                     System.IO.Directory.CreateDirectory("content");
                 }
                 //检测content/post是否存在
-                if (!System.IO.Directory.Exists("content/post"))
+                if (!System.IO.Directory.Exists("content\\post"))
                 {
-                    System.IO.Directory.CreateDirectory("content/post");
+                    System.IO.Directory.CreateDirectory("content\\post");
                 }
 
                 //读取全部文章
-                List<string> postDirs = Utils.Utils.GetDirectories("content/post");
+                List<string> postDirs = Utils.Utils.GetDirectories("content\\post");
 
                  foreach (var postDir in postDirs)
                 {
@@ -32,7 +32,7 @@ namespace QYBlog.Shared.Class
                     {
                         if (post.EndsWith(".md"))
                         {
-                            Posts.Add(Post.CreatePost(post));
+                            Posts.Add(Post.CreatePost(post, postDir));
                         }
                     }
                  }

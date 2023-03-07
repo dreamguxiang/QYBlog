@@ -35,11 +35,13 @@ namespace QYBlog.Shared.Class
         public bool Comments { get; set; }
         public bool Draft { get; set; }
         public bool Password { get; set; }
+        //路径
+        public string Path { get; set; }
 
         public Post() { 
         }
 
-        static public Post CreatePost(string a1)
+        static public Post CreatePost(string a1,string a2)
         {
            var fileData =  File.ReadAllText(a1);
            //获取---与---之间的内容
@@ -51,6 +53,7 @@ namespace QYBlog.Shared.Class
                 .Build();
 
             var post = deserializer.Deserialize<Post>(PostInfo);
+            post.Path = a2;
             return post;
         }
     }

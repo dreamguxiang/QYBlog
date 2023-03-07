@@ -20,6 +20,7 @@
     protected override async Task OnInitializedAsync()
     {
         posts = await httpClient.GetFromJsonAsync<List<Post>>("/api/postlist");
+
         StateHasChanged();
         await base.OnInitializedAsync();
     }
