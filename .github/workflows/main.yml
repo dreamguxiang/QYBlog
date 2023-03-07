@@ -12,5 +12,5 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Publish app
-      working-directory: /src
+      working-directory: $GITHUB_WORKSPACE/src
       run: dotnet publish -c Release
