@@ -13,7 +13,7 @@ jobs:
 
     - name: Publish app
       working-directory: src
-      run: dotnet publish -c Release --sc
+      run: dotnet publish -c Release
 
     - name: Deploy site to server
       uses: easingthemes/ssh-deploy@v2.2.11
