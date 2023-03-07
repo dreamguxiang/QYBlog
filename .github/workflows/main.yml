@@ -1,0 +1,28 @@
+name: DeployToPages
+env:
+  PUBLISH_DIR: bin/Release/net6.0/publish
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Publish app
+      working-directory: src
+      run: dotnet publish -c Release
+
+    - name: Deploy site to server
+      uses: easingthemes/ssh-deploy@v2.2.11
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+        # 此处为rsync的flag
+        ARGS: "-avz --delete"
+        SOURCE: "src/Server/bin/Release/net6.0/publish/"
+        REMOTE_HOST: "litetitle.com"
+        REMOTE_USER: "root"
+        TARGET: "/var/www/html/newlite"
+        SCRIPT_AFTER: ./QYBlog.Server
