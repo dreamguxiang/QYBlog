@@ -20,7 +20,7 @@
     protected override async Task OnInitializedAsync()
     {
         Posts = await HttpClient.GetFromJsonAsync<List<Post>>("/api/postlist");
-
+        SortByDate();
         StateHasChanged();
         await base.OnInitializedAsync();
     }
@@ -28,9 +28,7 @@
     //文章按日期排序
     public void SortByDate()
     {
-        foreach (var post in Posts)
-        {
-
-        }
+        Posts = Posts.OrderByDescending(x => x.Date).ToList();
+        StateHasChanged();
     }
 }

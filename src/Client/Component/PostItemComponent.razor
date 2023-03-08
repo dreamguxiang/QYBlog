@@ -1,9 +1,11 @@
 ﻿@using QYBlog.Shared.Class
 @using System.Drawing
-<MudCard Style="Border-radius: 15px;">
+@using Size=MudBlazor.Size
+
+<MudCard Style="Border-radius: 20px;" Elevation="5">
     @if (ShowImg)
     {
-        <MudCardMedia Image="@RealImg" />
+        <MudCardMedia Image="@RealImg"/>
     }
     <MudCardContent>
         @if (ShowTags)
@@ -13,11 +15,31 @@
                 <MudChip Color="@TagColor">@tag</MudChip>
             }
         }
-        <h3 style="font-weight: 600;margin: 0;color: var(--card-text-color-main);font-size: 2.2rem;">
+        <MudStack Spacing="2">
+        <h2 style="font-weight: 600;margin: 0;color: #000 ;font-size: 1.6rem;">
             @Post.Title
-        </h3>
+        </h2>
         <MudText Typo="Typo.body1">@Post.Description</MudText>
+        </MudStack>
     </MudCardContent>
+    <MudCardActions>
+        <MudGrid Spacing="1" Justify="Justify.FlexStart">
+            <MudItem/>
+            <MudItem>
+                <MudIcon Size="Size.Small" Style="color: #bababa" Icon="@Icons.Material.Filled.DateRange"/></MudItem>
+            <MudItem>
+                <MudText Style="color: #bababa">@FormatDate(@Post.Date)</MudText></MudItem>
+            <MudItem>
+                <MudIcon Size="Size.Small" Style="color: #bababa" Icon="@Icons.Material.Filled.AccessTime"/></MudItem>
+            <MudItem>
+                <MudText Style="color: #bababa">阅读时长: @GetReadTime(@Post.MdData)分钟</MudText></MudItem>
+            <MudItem>
+                <MudIcon Size="Size.Small" Style="color: #bababa" Icon="@Icons.Material.Outlined.FontDownload"/></MudItem>
+            <MudItem>
+                <MudText Style="color: #bababa">@GetWordCount(@Post.MdData)字</MudText></MudItem>
+                        
+        </MudGrid>
+    </MudCardActions>
 </MudCard>
 
 @code {
@@ -59,6 +81,14 @@
             RealImg = RealImg.Replace("\\", "/");
         }
     }
+    //格式化Date 
+    //2023-01-10T20:32:48+08:00 => Mar 04, 2023
+    public string FormatDate(string date)
+    {
+        var date1 = DateTime.Parse(date);
+        return date1.ToString("MMM dd, yyyy");
+    }
+    
 
     public void IsShowTags()
     {
@@ -66,6 +96,21 @@
         {
             ShowTags = true;
         }
+    }
+    
+    //获取字数
+    public int GetWordCount(string content)
+    {
+        var count = content.Split(" ").Length;
+        return count;
+    }
+    
+    //获取阅读时间
+    public int GetReadTime(string content)
+    {
+        var count = GetWordCount(content);
+        var time = count / 200;
+        return time;
     }
 }
 

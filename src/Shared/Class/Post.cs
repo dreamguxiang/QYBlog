@@ -37,6 +37,8 @@ namespace QYBlog.Shared.Class
         public bool Password { get; set; }
         //路径
         public string Path { get; set; }
+        //md内容
+        public string MdData { get; set; }
 
         public Post() { 
         }
@@ -47,6 +49,9 @@ namespace QYBlog.Shared.Class
            //获取---与---之间的内容
            var PostInfo = fileData.Substring(fileData.IndexOf("---") + 3, fileData.LastIndexOf("---") - 3);
 
+           //获取除了---与---之间的内容
+           var PostData = fileData.Substring(fileData.LastIndexOf("---") + 3);
+
            //读取ymal
            var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
@@ -54,6 +59,7 @@ namespace QYBlog.Shared.Class
 
             var post = deserializer.Deserialize<Post>(PostInfo);
             post.Path = a2;
+            post.MdData = PostData;
             return post;
         }
     }
