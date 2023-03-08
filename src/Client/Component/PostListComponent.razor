@@ -4,7 +4,7 @@
 @using QYBlog.Client.Component
 
 <MudStack Spacing="8"> 
-    @foreach (var post in posts)
+    @foreach (var post in Posts)
     {
         <PostItemComponent Post="@post" />
     }
@@ -13,15 +13,24 @@
 @code {
 
     [Inject]
-    private HttpClient httpClient { get; set; }
+    private HttpClient HttpClient { get; set; }
 
-    public List<Post> posts = new List<Post>();
+    public List<Post> Posts = new List<Post>();
 
     protected override async Task OnInitializedAsync()
     {
-        posts = await httpClient.GetFromJsonAsync<List<Post>>("/api/postlist");
+        Posts = await HttpClient.GetFromJsonAsync<List<Post>>("/api/postlist");
 
         StateHasChanged();
         await base.OnInitializedAsync();
+    }
+    
+    //文章按日期排序
+    public void SortByDate()
+    {
+        foreach (var post in Posts)
+        {
+
+        }
     }
 }

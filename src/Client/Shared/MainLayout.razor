@@ -1,25 +1,32 @@
-﻿@inherits LayoutComponentBase
+﻿@using MudBlazor.Utilities
+@inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider Theme="@MyCustomTheme"/>
+
+@code {
+  MudTheme MyCustomTheme = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Background =  (MudColor) "#f5f5f5ff",
+            AppbarBackground = (MudColor) "#f5f5f5ff",
+            DrawerBackground = (MudColor) "#f5f5f5ff",
+        },
+        
+    };
+}
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <style type="text/css">
-        .my-avatar1 {
-            position: fixed;
-        }
-    </style>
-
     <RuntimeHeader />
-
-
-    <MudPaper Width="200px" Class="my-avatar1 pa-3 d-none d-md-block" Elevation="0">
+    <MudPaper Class="d-none d-md-block" Elevation="0">
         <MudDrawer Open=true Elevation="0" Breakpoint="Breakpoint.Md">
-
+            <br/>
             <MudDrawerContainer>
-                <QYBlog.Client.Component.AuthorInfoComponent />
+                <QYBlog.Client.Component.AuthorInfoComponent/>
             </MudDrawerContainer>
+
             <MudNavMenu Margin="Margin.Normal">
                 <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
                 <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
@@ -79,12 +86,10 @@
 
     private int ScreenWidth { get; set; } = 0;
 
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-
             ScreenWidth = await JSRuntime.InvokeAsync<int>("getScreenWidth");
             width = await JSRuntime.InvokeAsync<int>("getWindowWidth");
 
