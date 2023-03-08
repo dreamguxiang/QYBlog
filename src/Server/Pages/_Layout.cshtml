@@ -45,7 +45,7 @@
             <persist-component-state />
         </srvr-app>
         <wasm-app style="display: none;">
-            <component type="typeof(App)" render-mode="WebAssembly">
+            <component type="typeof(App)" render-mode="WebAssembly" />
         </wasm-app>
     }
 
@@ -60,7 +60,7 @@
     else if (hybridType == HybridType.WebAssembly)
     {
         <app>
-            <component type="typeof(App)" render-mode="WebAssemblyPrerendered">
+            <component type="typeof(App)" render-mode="WebAssemblyPrerendered" />
         </app>
         <script src="_framework/blazor.webassembly.js"></script>
     }
@@ -76,6 +76,5 @@
     </div>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script>window.Blazor.start();</script>
-
 </body>
 </html>
