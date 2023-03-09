@@ -22,7 +22,14 @@ jobs:
         # 此处为rsync的flag
         ARGS: "-avz --delete"
         SOURCE: "src/Server/bin/Release/net6.0/publish/"
-        REMOTE_HOST: "litetitle.com"
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: "root"
         TARGET: "/var/www/html/newlite"
-        SCRIPT_AFTER: ./QYBlog.Server
+
+    - name: Run Blog
+      uses: garygrossgarten/github-action-ssh@0.7.0
+      with:
+       command: ./qyblog.sh
+       host: ${{ secrets.REMOTE_HOST }}
+       username: root
+       privateKey: ${{ secrets.ACCESS_TOKEN }}
