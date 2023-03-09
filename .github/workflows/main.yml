@@ -19,12 +19,11 @@ jobs:
       uses: easingthemes/ssh-deploy@v2.2.11
       env:
         SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-        # 此处为rsync的flag
         ARGS: "-avz --delete"
         SOURCE: "src/Server/bin/Release/net6.0/publish/"
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: "root"
         TARGET: "/var/www/html/newlite"
         SCRIPT_AFTER: |
-            cd /root
-           ./qyblog.sh
+          cd /root
+          ./qyblog.sh
