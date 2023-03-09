@@ -26,4 +26,5 @@ jobs:
         REMOTE_USER: "root"
         TARGET: "/var/www/html/newlite"
         SCRIPT_AFTER: |
+            cd /root
            ./qyblog.sh
