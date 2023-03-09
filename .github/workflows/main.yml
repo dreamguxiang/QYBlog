@@ -25,11 +25,5 @@ jobs:
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: "root"
         TARGET: "/var/www/html/newlite"
-
-    - name: Run Blog
-      uses: garygrossgarten/github-action-ssh@0.7.0
-      with:
-       command: ./qyblog.sh
-       host: ${{ secrets.REMOTE_HOST }}
-       username: root
-       privateKey: ${{ secrets.ACCESS_TOKEN }}
+        SCRIPT_AFTER: |
+           ./qyblog.sh
