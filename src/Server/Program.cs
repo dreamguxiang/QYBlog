@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-
 using Microsoft.Extensions.FileProviders;
+using MudBlazor;
 using MudBlazor.Services;
 using QYBlog.Shared.Utils;
-using System.Net;
 
 Utils.CreateDirectory();
 
@@ -22,6 +21,20 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
 
+//////////////////////////////////////////////////////////////////////////////////
+//移除IMudPopoverService服务,并重新注册,以关闭ThrowOnDuplicateProvider （临时处理）
+var descriptor = builder.Services.FirstOrDefault(d => d.ServiceType == typeof(IMudPopoverService));
+if (descriptor != null)
+{
+    builder.Services.Remove(descriptor);
+}
+
+builder.Services.AddMudPopoverService(delegate (PopoverOptions o)
+{
+    o.ThrowOnDuplicateProvider = false;
+});
+//////////////////////////////////////////////////////////////////////////////////
+
 //注册API服务
 builder.Services.AddControllers();
 builder.Services.AddCors();
@@ -38,36 +51,31 @@ if (!builder.Services.Any(x => x.ServiceType == typeof(HttpClient)))
     });
 }
 
+
+
 var app = builder.Build();
-app.UseWebAssemblyDebugging();
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 else
 {
     app.UseWebAssemblyDebugging();
 }
-
-//app.UseHttpsRedirection();
-
 app.UseBlazorFrameworkFiles();
 
+//////////////////静态文件注册/////////////////
 app.UseStaticFiles();
-
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "content/post")),
     RequestPath = "/content/post",
 });
+/////////////////////////////////////////////
+
 
 app.UseRouting();
-
-
 
 app.MapRazorPages();
 app.MapControllers();
@@ -80,6 +88,9 @@ app.Run();
 
 
 
+/// <summary>
+/// 额外服务
+/// </summary>
 public enum HybridType
 {
     ServerSide,
