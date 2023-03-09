@@ -44,9 +44,11 @@
             <component type="typeof(App)" render-mode="ServerPrerendered" />
             <persist-component-state />
         </srvr-app>
-        <wasm-app style="display: none;">
+
+         <wasm-app style="display: none;">
             <component type="typeof(App)" render-mode="WebAssembly" />
         </wasm-app>
+
     }
 
     @if (hybridType == HybridType.ServerSide)

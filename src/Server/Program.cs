@@ -21,6 +21,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
+
 //注册API服务
 builder.Services.AddControllers();
 builder.Services.AddCors();
@@ -38,7 +39,7 @@ if (!builder.Services.Any(x => x.ServiceType == typeof(HttpClient)))
 }
 
 var app = builder.Build();
-
+app.UseWebAssemblyDebugging();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

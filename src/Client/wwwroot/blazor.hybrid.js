@@ -79,7 +79,6 @@
             blazorInfo('Wasm ready');
 
             wasmReadyToSwitch = true;
-
             if (window.hybridType === 'HybridOnReady') {
                 window.switchToWasm(window.location.href);
             }

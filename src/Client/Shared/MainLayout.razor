@@ -11,10 +11,13 @@
             Background =  (MudColor) "#f5f5f5ff",
             AppbarBackground = (MudColor) "#f5f5f5ff",
             DrawerBackground = (MudColor) "#f5f5f5ff",
+            White = (MudColor) "#f5f5f5ff",
+            Surface = (MudColor) "#f5f5f5ff",
+            
         },
-        
     };
 }
+
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -35,9 +38,11 @@
         </MudDrawer>
     </MudPaper>
 
-     <MudPaper Width="200px" Class="d-none d-md-block" Elevation="0">
-        <MudDrawer Width="400px" Open=true Elevation="0" Anchor="Anchor.Right" Breakpoint="Breakpoint.Md">
-        </MudDrawer>
+     <MudPaper Class="d-none d-md-block" Elevation="0">
+         <MudDrawer Width="400px" Open=true Elevation="0" Anchor="Anchor.Right" Breakpoint="Breakpoint.Md">
+             <MudTimePicker PickerVariant="PickerVariant.Static" Color="Color.Success" Rounded="true" Elevation="1" Text="03:37 PM" AmPm="true" />
+
+         </MudDrawer>
     </MudPaper>
 
     <MudAppBar Elevation="0" Style="display:none" Class="d-block d-md-none" Color=Color.Transparent>
@@ -104,7 +109,6 @@
             await JSRuntime.InvokeVoidAsync("registerResizeHandler", DotNetObjectReference.Create(this));
             StateHasChanged();
         }
-
     }
 
     [JSInvokable]
