@@ -23,6 +23,7 @@ jobs:
         SOURCE: "src/Server/bin/Release/net6.0/publish/"
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: "root"
+        EXCLUDE: "/content/"
         TARGET: "/var/www/html/newlite"
         
     - name: Run Blog
