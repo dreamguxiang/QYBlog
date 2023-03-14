@@ -1,4 +1,10 @@
 ﻿@using MudBlazor.Utilities
+@inject ISnackbar Snackbar
+@using MudBlazor.Extensions
+@using MudExtensions.Utilities
+@using QYBlog.Client.Component
+@using QYBlog.Client.Component.Layout;
+
 @inherits LayoutComponentBase
 
 
@@ -25,25 +31,11 @@
 <MudLayout>
     <RuntimeHeader />
     <MudPaper Class="d-none d-md-block" Elevation="0">
-        <MudDrawer Open=true Elevation="0" Breakpoint="Breakpoint.Md">
-            <br/>
-            <MudDrawerContainer>
-                <QYBlog.Client.Component.AuthorInfoComponent/>
-            </MudDrawerContainer>
-
-            <MudNavMenu Margin="Margin.Normal">
-                <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-                <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
-                <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
-            </MudNavMenu>
-        </MudDrawer>
+        <LeftDrawer />
     </MudPaper>
 
      <MudPaper Class="d-none d-md-block" Elevation="0">
-         <MudDrawer Width="400px" Open=true Elevation="0" Anchor="Anchor.Right" Breakpoint="Breakpoint.Md">
-             <MudTimePicker PickerVariant="PickerVariant.Static" Color="Color.Success" Rounded="true" Elevation="1" Text="03:37 PM" AmPm="true" />
-
-         </MudDrawer>
+       <RightDrawer />
     </MudPaper>
 
     <MudAppBar Elevation="0" Style="display:none" Class="d-block d-md-none" Color=Color.Transparent>
@@ -52,20 +44,14 @@
     </MudAppBar>
 
     <MudPaper Width="200px" Class="pa-3 d-block d-md-none" Elevation="0">
-        <QYBlog.Client.Component.AuthorInfoComponent />
+        <AuthorInfoComponent />
     </MudPaper>
 
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large">
             @if (@_drawerOpen)
             {
-                <MudPaper Class="@($"d-block d-md-none mud-navmenu mud-navmenu-primary mud-navmenu-margin-dense mud-navmenu-dense mud-navmenu-rounded pa-2 overflow-auto")" Style="overflow:hidden; position:relative;" Elevation="0">
-                    <MudNavMenu Margin="Margin.Normal">
-                        <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-                        <MudNavLink Href="/search" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Search">Search</MudNavLink>
-                        <MudNavLink Href="/archives" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Archive">Archives</MudNavLink>
-                    </MudNavMenu>
-                </MudPaper>
+             <MobileNavLinkComponent />
             }
         </MudContainer>
         <MudContainer MaxWidth="MaxWidth.Large">
